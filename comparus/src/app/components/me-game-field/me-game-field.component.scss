@@ -1,0 +1,19 @@
+.cell {
+  width: 30px;
+  height: 30px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 30vh;
+  height: 30vh;
+  &__row {
+    flex-grow: 1;
+    display: flex;
+    gap: 0.5rem;
+  }
+  &__cell {
+    flex-grow: 1;
+  }
+}

@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <h2>Game field</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center mt-4">
+      <div class="field bg-light">
+        <div class="field__row" *ngFor="let row of gameFieldMock">
+          <div
+            class="field__cell"
+            *ngFor="let cell of row"
+            [ngClass]="{
+              'bg-primary': !cell.player && !cell.program && !cell.isActive,
+              'bg-warning': cell.isActive,
+              'bg-success': cell.player,
+              'bg-danger': cell.program
+            }"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <button type="button" class="btn btn-primary m-4" (click)="open()">
+        End GAME!
+      </button>
+    </div>
+  </div>
+</div>
