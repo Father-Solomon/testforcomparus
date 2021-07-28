@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FieldService } from 'services/field.service';
+import { NewGameBtnService } from 'services/new-game-btn.service';
+
+import { FieldCell } from 'models/field.model';
 import { MeModalComponent } from 'components/me-modal/me-modal.component';
 
 @Component({
@@ -8,63 +13,25 @@ import { MeModalComponent } from 'components/me-modal/me-modal.component';
   styleUrls: ['./me-game-field.component.scss'],
 })
 export class MeGameFieldComponent implements OnInit {
-  gameFieldMock = [
-    [
-      {
-        player: false,
-        program: false,
-        isActive: true,
-      },
-      {
-        player: true,
-        program: false,
-        isActive: false,
-      },
-      {
-        player: false,
-        program: true,
-        isActive: false,
-      },
-    ],
-    [
-      {
-        player: false,
-        program: false,
-        isActive: false,
-      },
-      {
-        player: false,
-        program: false,
-        isActive: false,
-      },
-      {
-        player: false,
-        program: false,
-        isActive: false,
-      },
-    ],
-    [
-      {
-        player: false,
-        program: false,
-        isActive: false,
-      },
-      {
-        player: false,
-        program: true,
-        isActive: false,
-      },
-      {
-        player: false,
-        program: false,
-        isActive: false,
-      },
-    ],
-  ];
+  gameField: FieldCell[][] | null = null;
+  @ViewChild('field', { static: false })
+  field: ElementRef | undefined;
+  stream$ = new Subject();
+  constructor(
+    private modalService: NgbModal,
+    private fieldService: FieldService,
+    private newGameBtnService: NewGameBtnService
+  ) {}
 
-  constructor(private modalService: NgbModal) {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.gameField = this.fieldService.create();
+    this.newGameBtnService.newGameBtn$.subscribe((event) => {
+      this.start();
+    });
+  }
+  start(): void {
+    console.log(this.field);
+  }
 
   open() {
     const modalRef = this.modalService.open(MeModalComponent, {

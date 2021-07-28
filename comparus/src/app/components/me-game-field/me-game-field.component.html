@@ -6,11 +6,11 @@
   </div>
   <div class="row">
     <div class="col d-flex justify-content-center mt-4">
-      <div class="field bg-light">
-        <div class="field__row" *ngFor="let row of gameFieldMock">
+      <div class="field bg-light" #field>
+        <div class="field__row" *ngFor="let row of gameField; let rowI = index">
           <div
             class="field__cell"
-            *ngFor="let cell of row"
+            *ngFor="let cell of row; let colI = index"
             [ngClass]="{
               'bg-primary': !cell.player && !cell.program && !cell.isActive,
               'bg-warning': cell.isActive,
