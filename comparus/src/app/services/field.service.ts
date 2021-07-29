@@ -9,8 +9,8 @@ export class FieldService {
   sideLength = 10;
   readyField: FieldCell[][] | null = null;
   constructor() {}
-  
-  score$ = new Subject();
+
+  score$ = new Subject<{ player: number; program: number }>();
 
   create(): FieldCell[][] {
     this.readyField = Array.from({ length: this.sideLength }, () =>
@@ -22,7 +22,7 @@ export class FieldService {
     );
     return this.readyField;
   }
-  
+
   changeField(
     field: FieldCell[][],
     variant: 'player' | 'program' | 'active',

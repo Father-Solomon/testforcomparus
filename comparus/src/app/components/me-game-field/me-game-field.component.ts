@@ -41,7 +41,7 @@ export class MeGameFieldComponent implements OnInit {
       );
       observer.complete();
       eventStream$.unsubscribe();
-      this.makeAMove(this.gameField);
+      this.moveEndController(this.gameField);
     });
     const eventStream$ = fromEvent(document, 'click').subscribe({
       next: (v) => {
@@ -58,10 +58,10 @@ export class MeGameFieldComponent implements OnInit {
           timerStream$.unsubscribe();
           eventStream$.unsubscribe();
           observer.unsubscribe();
-          this.makeAMove(this.gameField);
+          this.moveEndController(this.gameField);
         }
       },
-      complete: () => console.log('COmplite'),
+      complete: () => console.log('Complete'),
     });
   });
 
@@ -85,23 +85,33 @@ export class MeGameFieldComponent implements OnInit {
     this.makeAMove(this.gameField);
   }
 
-  scoreCounter(gameField: FieldCell[][]): void {
-    const squeres: FieldCell[] = [];
-    gameField.map(row => {
-      row.map(col => squeres.push(col))
-    })
-    const playerScore = squeres.filter(squere => squere.player === true).length;
-    const programScore = squeres.filter(squere => squere.program === true).length;
-    this.fieldService.score$.next({player: playerScore, program: programScore})
-    if(playerScore === 10 || programScore === 10) {
+  moveEndController(gameField: FieldCell[][]): void {
+    const squares: FieldCell[] = [];
+    gameField.map((row) => {
+      row.map((col) => squares.push(col));
+    });
+    const playerScore = squares.filter(
+      (square) => square.player === true
+    ).length;
+    const programScore = squares.filter(
+      (square) => square.program === true
+    ).length;
+    this.fieldService.score$.next({
+      player: playerScore,
+      program: programScore,
+    });
+    if (playerScore === 10 || programScore === 10) {
       this.endCurrentGame(playerScore);
+      return;
+    } else {
+      this.makeAMove(this.gameField!);
     }
   }
 
   endCurrentGame(playerScore: number): void {
-    const winner: string = playerScore === 10 ? 'player': 'program';
+    const winner: string = playerScore === 10 ? ' player ' : ' program ';
     this.newGameBtnService.endGame$.next('');
-    this.open(winner)
+    this.open(winner);
   }
 
   open(winner: string) {
@@ -110,11 +120,20 @@ export class MeGameFieldComponent implements OnInit {
     });
     modalRef.componentInstance.name = 'The' + winner + 'is WIN!';
     modalRef.result.then(
-      (data) => {
-        console.log(data);
+      () => {
+        this.fieldService.score$.next({
+          player: 0,
+          program: 0,
+        });
+        this.gameField = null;
+        this.start();
       },
-      (reason) => {
-        console.log(reason);
+      () => {
+        this.fieldService.score$.next({
+          player: 0,
+          program: 0,
+        });
+        this.gameField = null;
       }
     );
   }

@@ -10,18 +10,22 @@ import { FieldService } from 'services/field.service';
 export class MeSidebarComponent implements OnInit {
   score = { player: 0, program: 0 };
   gameIsActive: boolean = false;
-  constructor(private newGameBtnService: NewGameBtnService, private fieldService: FieldService) {}
+  constructor(
+    private newGameBtnService: NewGameBtnService,
+    private fieldService: FieldService
+  ) {}
 
   ngOnInit(): void {
     this.newGameBtnService.endGame$.subscribe(() => {
       this.gameIsActive = false;
     });
-    this.fieldService.score$.subscribe((v)=> console.log(v)
-    )
+    this.fieldService.score$.subscribe((v) => {
+      this.score.player = v.player;
+      this.score.program = v.program;
+    });
   }
   startGame(event: MouseEvent): void {
     this.gameIsActive = true;
     this.newGameBtnService.newGameBtn$.next('');
   }
-
 }
