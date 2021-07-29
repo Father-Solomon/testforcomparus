@@ -85,6 +85,12 @@ export class MeGameFieldComponent implements OnInit {
     this.makeAMove(this.gameField);
   }
 
+  endCurrentGame(playerScore: number): void {
+    const winner: string = playerScore === 10 ? ' player ' : ' program ';
+    this.newGameBtnService.endGame$.next('');
+    this.open(winner);
+  }
+
   moveEndController(gameField: FieldCell[][]): void {
     const squares: FieldCell[] = [];
     gameField.map((row) => {
@@ -106,12 +112,6 @@ export class MeGameFieldComponent implements OnInit {
     } else {
       this.makeAMove(this.gameField!);
     }
-  }
-
-  endCurrentGame(playerScore: number): void {
-    const winner: string = playerScore === 10 ? ' player ' : ' program ';
-    this.newGameBtnService.endGame$.next('');
-    this.open(winner);
   }
 
   open(winner: string) {
