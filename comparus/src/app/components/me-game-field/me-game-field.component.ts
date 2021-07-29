@@ -96,12 +96,8 @@ export class MeGameFieldComponent implements OnInit {
     gameField.map((row) => {
       row.map((col) => squares.push(col));
     });
-    const playerScore = squares.filter(
-      (square) => square.player === true
-    ).length;
-    const programScore = squares.filter(
-      (square) => square.program === true
-    ).length;
+    const playerScore = squares.filter((square) => square.player).length;
+    const programScore = squares.filter((square) => square.program).length;
     this.fieldService.score$.next({
       player: playerScore,
       program: programScore,
