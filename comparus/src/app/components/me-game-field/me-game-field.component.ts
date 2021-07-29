@@ -33,7 +33,7 @@ export class MeGameFieldComponent implements OnInit {
 
   gameStream$ = new Observable((observer) => {
     observer.next('First value');
-    const timerStream$ = timer(7000).subscribe((v) => {
+    const timerStream$ = timer(1000).subscribe((v) => {
       this.gameField = this.fieldService.changeField(
         this.gameField!,
         'program',
