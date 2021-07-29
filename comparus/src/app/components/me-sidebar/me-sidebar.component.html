@@ -10,10 +10,10 @@
       <tbody>
         <tr>
           <td scope="col" class="text-center fs-1 fw-bold text-primary">
-            {{ scoreMock.player }}
+            {{ score.player }}
           </td>
           <td scope="col" class="text-center fs-1 fw-bold text-primary">
-            {{ scoreMock.program }}
+            {{ score.program }}
           </td>
         </tr>
       </tbody>
@@ -21,7 +21,7 @@
   </div>
   <div class="row">
     <div class="col d-flex justify-content-center">
-      <button type="button" class="btn btn-primary" (click)="startGame($event)">
+      <button type="button" class="btn btn-primary" (click)="startGame($event)" [disabled]="gameIsActive">
         New GAME!
       </button>
     </div>

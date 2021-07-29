@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NewGameBtnService } from 'services/new-game-btn.service';
+import { FieldService } from 'services/field.service';
 
 @Component({
   selector: 'app-me-sidebar',
@@ -7,11 +8,20 @@ import { NewGameBtnService } from 'services/new-game-btn.service';
   styleUrls: ['./me-sidebar.component.scss'],
 })
 export class MeSidebarComponent implements OnInit {
-  scoreMock = { player: 0, program: 1 };
-  constructor(private newGameBtnService: NewGameBtnService) {}
+  score = { player: 0, program: 0 };
+  gameIsActive: boolean = false;
+  constructor(private newGameBtnService: NewGameBtnService, private fieldService: FieldService) {}
 
-  ngOnInit(): void {}
-  startGame(event: any): void {
-    this.newGameBtnService.newGameBtn$.next(event);
+  ngOnInit(): void {
+    this.newGameBtnService.endGame$.subscribe(() => {
+      this.gameIsActive = false;
+    });
+    this.fieldService.score$.subscribe((v)=> console.log(v)
+    )
   }
+  startGame(event: MouseEvent): void {
+    this.gameIsActive = true;
+    this.newGameBtnService.newGameBtn$.next('');
+  }
+
 }
