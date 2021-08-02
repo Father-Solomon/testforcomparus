@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { ReactiveFormsModule, FormsModule }   from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewGameBtnService } from './services/new-game-btn.service';
@@ -18,7 +18,7 @@ import { MeModalComponent } from './components/me-modal/me-modal.component';
     MeGameFieldComponent,
     MeModalComponent,
   ],
-  imports: [BrowserModule, NgbModule],
+  imports: [BrowserModule, NgbModule, BrowserModule, FormsModule, ReactiveFormsModule],
   providers: [NewGameBtnService, FieldService],
   bootstrap: [AppComponent],
 })

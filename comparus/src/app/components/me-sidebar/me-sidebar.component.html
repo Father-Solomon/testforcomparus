@@ -19,9 +19,24 @@
       </tbody>
     </table>
   </div>
+  <form [formGroup]="intervalForm" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label>Game Interval</label>
+      <input class="form-control" name="interval" formControlName="interval" [disabled]="gameIsActive"/>
+        
+      <div class="alert alert-danger"
+          *ngIf="intervalForm.controls['interval'].invalid && intervalForm.controls['interval'].value !== ''">
+          Interval is incorrect
+      </div>
+      <div class="alert alert-danger"
+        *ngIf="intervalForm.controls['interval'].value === ''">
+        Interval is not set
+  </div>
+  </div>
+  </form>
   <div class="row">
     <div class="col d-flex justify-content-center">
-      <button type="button" class="btn btn-primary" (click)="startGame($event)" [disabled]="gameIsActive">
+      <button type="button" class="btn btn-primary" (click)="startGame($event)" [disabled]="gameIsActive || intervalForm.controls['interval'].invalid">
         New GAME!
       </button>
     </div>

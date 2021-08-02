@@ -19,6 +19,7 @@ export class MeGameFieldComponent implements OnInit {
   field: ElementRef | undefined = undefined;
   stream$ = new Subject();
   chosenCell: { row: number; col: number } = { row: 0, col: 0 };
+  timerInMs: number = 0;
   constructor(
     private modalService: NgbModal,
     private fieldService: FieldService,
@@ -26,7 +27,8 @@ export class MeGameFieldComponent implements OnInit {
     private randomCellService: RandomCellService
   ) {}
   ngOnInit(): void {
-    this.newGameBtnService.newGameBtn$.subscribe(() => {
+    this.newGameBtnService.newGameBtn$.subscribe((v) => {
+      this.timerInMs = v;
       this.start();
     });
   }
