@@ -32,9 +32,6 @@ export class MeSidebarComponent implements OnInit {
       this.score.program = v.program;
     });
   }
-  submit() {
-    console.log(this.intervalForm);
-  }
 
   startGame(event: MouseEvent): void {
     this.gameIsActive = true;

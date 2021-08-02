@@ -19,7 +19,7 @@
       </tbody>
     </table>
   </div>
-  <form [formGroup]="intervalForm" (ngSubmit)="submit()">
+  <form [formGroup]="intervalForm">
     <div class="form-group">
       <label>Game Interval</label>
       <input class="form-control" name="interval" formControlName="interval" [disabled]="gameIsActive"/>
